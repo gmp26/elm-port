@@ -1,0 +1,28 @@
+{
+  "name": "elm-port",
+  "version": "0.0.0",
+  "authors": [
+    "Mike Pearson <gmp26@cam.ac.uk>"
+  ],
+  "description": "Element providing solution to no problem in particular.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "elm",
+    "port"
+  ],
+  "main": "elm-port.html",
+  "license": "MIT",
+  "homepage": "https://github.com/gmp26/elm-port/",
+  "ignore": [
+    "/.*",
+    "/tests/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.4.2"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^0.7.3"
+  }
+}
