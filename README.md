@@ -1,7 +1,10 @@
 elm-port
 ========
 
-See the [component page](https://github.com/gmp26/elm-port) for more information.
+This is an experiment to see whether there is any benefit in wrapping an elm port up as a
+polymer web-component.
+
+<!-- See the [component page](https://github.com/gmp26/elm-port) for more information.
 
 ## Getting Started
 
@@ -30,4 +33,4 @@ The tests are also compatible with [web-component-tester](https://github.com/Pol
 ```sh
 npm install -g web-component-tester
 wct
-```
+``` -->
