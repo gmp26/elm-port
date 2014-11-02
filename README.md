@@ -4,6 +4,14 @@ elm-port
 This is an experiment to see whether there is any benefit in wrapping an elm port up as a
 polymer web-component.
 
+Versions:
+---------
+* 0.0.1
+	Wraps Stamps.elm in a web-component. Needs to be installed as part of a web-components development
+	tree. See [the polymer site](https://www.polymer-project.org/docs/start/reusableelements.html) for details on setting this up.
+
+	Not very useful in this form. It generates an `<elm-port>` element which implements [Stamps.elm with ports](https://github.com/evancz/elm-html-and-js) only.
+
 <!-- See the [component page](https://github.com/gmp26/elm-port) for more information.
 
 ## Getting Started
