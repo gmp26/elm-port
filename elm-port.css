@@ -18,3 +18,10 @@ polyfill-next-selector { content: ':host > h2'; }
 ::content h2 {
   color: blue;
 }
+
+#elmWindow {
+	width:  400px;
+	height: 400px;
+	background-color: white;
+	border: 1px solid #babdb6;
+}

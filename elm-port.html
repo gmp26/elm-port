@@ -8,9 +8,9 @@ Element providing solution to no problem in particular.
     <elm-port></elm-port>
 
 @element elm-port
-@blurb Element providing solution to no problem in particular.
+@blurb Experimental element which embeds an elm application
 @status alpha
-@homepage http://polymerlabs.github.io/elm-port
+@homepage https://github.com/gmp26/elm-port
 -->
 <polymer-element name="elm-port" attributes="notitle author">
 
@@ -18,67 +18,49 @@ Element providing solution to no problem in particular.
 
     <link rel="stylesheet" href="elm-port.css">
 
-    <h1>Hello from elm-port</h1>
-    <content></content>
+    <div id="elmWindow"></div>
+
+    <p>There are currently <span id="current-count">0</span> stamps.
+       <button on-click="{{resetStamps}}">Reset</button>
+    </p>
+    <p>You have created <span id="total-count">0</span> stamps in total.</p>
+  </div>
 
   </template>
 
   <script>
 
     Polymer({
-      /**
-       * The `author` attribute sets an initial author
-       *
-       * @attribute author
-       * @type string
-       * @default 'Dimitri Glazkov'
-       */
-      author: 'Dimitri Glazkov',
 
-      /**
-       * `fancy` is a property that does something fancy.
-       *
-       * @property fancy
-       * @type bool
-       * @default false
-       */
-      fancy: false,
+      // Reset the number of stamps in the Elm code.
+      // The value we send does not matter, we just
+      // need the event.
+      resetStamps: function(event, detail, sender) {
+        this.stamps.ports.reset.send([]);
+      },
+
+      currentCount: 10,
+      totalCount: 0,
+      total: 0,
 
       ready: function() {
-        // Ready is a lifecycle callback.
-        // You can do setup work in here.
-        // More info: http://www.polymer-project.org/docs/polymer/polymer.html#lifecyclemethods
-      },
 
-      /**
-       * The `sayHello` method will return a greeting.
-       *
-       * @method sayHello
-       * @param {String} greeting Pass in a specific greeting.
-       * @return {String} Returns a string greeting.
-       */
-      sayHello: function(greeting) {
-        var response = greeting || 'Hello World!';
-        return 'elm-port says, ' + response;
-      },
+        // Embed elm app in #elmWindow.
+        this.stamps = Elm.embed(Elm.Stamps, this.$.elmWindow, { reset:[] });
 
-      /**
-       * The `elm-port-lasers-success` event is fired whenever we
-       * call fireLasers.
-       *
-       * @event elm-port-lasers-success
-       * @param {Object} detail
-       *   @param {string} detail.sound An amazing sound.
-       */
+        // Always show the latest count of stamps, which is exported
+        // from the Stamps module as the 'count' event stream.
+        var currentCount = this.$['current-count'],
+            totalCount   = this.$['total-count'],
+            total        = 0;
 
-      /**
-       * The `fireLasers` method will fire the lasers. At least
-       * it will dispatch an event that claims lasers were fired :)
-       *
-       * @method fireLasers
-       */
-      fireLasers: function() {
-        this.fire('elm-port-lasers-success', { sound: 'Pew pew pew!' });
+        this.stamps.ports.count.subscribe(function(count) {
+            currentCount.innerHTML = count;
+            if (count > 0) {
+                total += 1;
+                totalCount.innerHTML = total;
+            }
+        });
       }
 
     });
@@ -86,3 +68,30 @@ Element providing solution to no problem in particular.
   </script>
 
 </polymer-element>
+
+
+
+<script type="text/javascript">
+  // Show the stamp module in the "elm-stamps" div.
+  var div = document.getElementById('elm-stamps');
+  var stamps = Elm.embed(Elm.Stamps, div, { reset:[] });
+  // Reset the number of stamps in the Elm code.
+  // The value we send does not matter, we just
+  // need the event.
+  function resetStamps() {
+    stamps.ports.reset.send([]);
+  }
+  // Always show the latest count of stamps, which is exported
+  // from the Stamps module as the 'count' event stream.
+  var currentCount = document.getElementById('current-count'),
+      totalCount   = document.getElementById('total-count'),
+      total        = 0;
+  stamps.ports.count.subscribe(function(count) {
+      currentCount.innerHTML = count;
+      if (count > 0) {
+          total += 1;
+          totalCount.innerHTML = total;
+      }
+  });
+</script>
+
